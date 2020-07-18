@@ -10,8 +10,8 @@ import java.util.HashMap;
 public class POSTrequest {
         public static void main(String[] args) throws IOException, InterruptedException { 
             var values = new HashMap<String, String>() {{
-                put("name", "Kristina");
-                put ("look like", "beautiful");
+                put("text", "Drink wine, save the water!");
+                put("chat_id", System.getenv("TELEGRAM_CHATID"));
             }};
     
             var objectMapper = new ObjectMapper();
@@ -20,7 +20,8 @@ public class POSTrequest {
     
             HttpClient client = HttpClient.newHttpClient();
             HttpRequest request = HttpRequest.newBuilder()
-                    .uri(URI.create("https://httpbin.org/post"))
+                    .uri(URI.create("https://api.telegram.org/bot"+System.getenv("TELEGRAM_TOKEN")+"/sendMessage"))
+                    .header("Content-Type", "application/json")
                     .POST(HttpRequest.BodyPublishers.ofString(requestBody))
                     .build();
     
